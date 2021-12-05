@@ -91,50 +91,10 @@ resistor is used to divide the 3.3 voltage.
 ## Software
 
 * [Arduino IDE 1.8.16](https://www.arduino.cc/en/software)
-* [Arduino ESP32 2.0.0 or newer](https://github.com/espressif/arduino-esp32#esp32-s2-and-esp32-c3-support)
+* [Arduino ESP32 2.0.0 or newer](https://docs.espressif.com/projects/arduino-esp32/en/latest/)
 
 The following libraries can be installed using the IDE Library Manager.
 
 * [WebSockets by Markus Sattler](https://github.com/Links2004/arduinoWebSockets)
 * [ArduinoJson by Benoit Blanchon](https://arduinojson.org/)
-
-The following library is installed from github.com and patched for Arduino ESP32
-2.0.0.
-
 * [WiFiManager by tzapu/tablatronix](https://github.com/tzapu/WiFiManager)
-
-The patch is required for arduino-esp32 2.0.1.
-
-```
-cd <IDE library directory>
-git clone https://github.com/tzapu/WiFiManager
-cd WiFiManager
-git checkout esp32s2
-git apply - <<_EOF_
-diff --git a/strings_en.h b/strings_en.h
-index f28c18d..543792d 100644
---- a/strings_en.h
-+++ b/strings_en.h
-@@ -371,9 +371,9 @@ const char* const WIFI_MODES[] PROGMEM = { "NULL", "STA", "AP", "STA+AP" };
- //     int8_t                max_tx_power;   /**< This field is used for getting WiFi maximum transmitting power, call esp_wifi_set_max_tx_power to set the maximum transmitting power. */
- //     wifi_country_policy_t policy;  /**< country policy */
- // } wifi_country_t;
--const wifi_country_t WM_COUNTRY_US{"US",1,11,CONFIG_ESP32_PHY_MAX_TX_POWER,WIFI_COUNTRY_POLICY_AUTO};
--const wifi_country_t WM_COUNTRY_CN{"CN",1,13,CONFIG_ESP32_PHY_MAX_TX_POWER,WIFI_COUNTRY_POLICY_AUTO};
--const wifi_country_t WM_COUNTRY_JP{"JP",1,14,CONFIG_ESP32_PHY_MAX_TX_POWER,WIFI_COUNTRY_POLICY_AUTO};
-+const wifi_country_t WM_COUNTRY_US{"US",1,11,CONFIG_ESP32_PHY_MAX_WIFI_TX_POWER,WIFI_COUNTRY_POLICY_AUTO};
-+const wifi_country_t WM_COUNTRY_CN{"CN",1,13,CONFIG_ESP32_PHY_MAX_WIFI_TX_POWER,WIFI_COUNTRY_POLICY_AUTO};
-+const wifi_country_t WM_COUNTRY_JP{"JP",1,14,CONFIG_ESP32_PHY_MAX_WIFI_TX_POWER,WIFI_COUNTRY_POLICY_AUTO};
- #elif defined(ESP8266) && !defined(WM_NOCOUNTRY)
- // typedef struct {
- //     char cc[3];               /**< country code string */
-@@ -483,4 +483,4 @@ typedef union {
- } arduino_event_info_t;
- 
- */
--#endif
-\ No newline at end of file
-+#endif
-
-_EOF_
-```
